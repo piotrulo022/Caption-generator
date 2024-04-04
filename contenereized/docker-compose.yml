@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  model_api:
+    build: ./model_api
+    ports:
+      - "5000:5000"
+    networks:
+      - my_network
+
+  streamlit_app:
+    build: ./streamlit_app
+    ports:
+      - "5005:5005"
+    networks:
+      - my_network
+
+
+networks:
+  my_network:
+    driver: bridge
