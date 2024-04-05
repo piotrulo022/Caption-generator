@@ -21,6 +21,8 @@ with local:
         
         st.image(img, caption = file.name, use_column_width=True)
         
+        push_db_file = st.checkbox(label = 'Push to the database', value = True, key = 'push_db_file')
+
 
         file_prompt = st.text_input(label = 'Additional prompt', value = 'Tell me what it is', key = 'file_prompt')
 
@@ -30,8 +32,8 @@ with local:
             response = requests.post(API_URL + '/predict_image_file/',
                                      files = files,
                                      params = {'language': LANG,
-                                            'prompt': file_prompt})
-            
+                                            'prompt': file_prompt,
+                                            'push_db': push_db_file})
             with st.spinner('Wait for it...'):
                 st.write(str(response.json()))
                 
@@ -46,12 +48,18 @@ with local:
 with www:
     url = st.text_input("Pass www image source", value = "https://www.google.pl/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png")
     url_prompt = st.text_input(label = 'Additional prompt', value = 'Tell me what it is', key = 'url_prompt')
+
+
+    push_db_url = st.checkbox(label = 'Push to the database', value = True, key = 'push_db_url')
+
+
     if st.button('Get description', key = 'url_request'):
         with st.spinner('Wait for it...'):
             response = requests.post(API_URL + '/predict_image_url/',
                                      json = {'url': url,
                                              'prompt': url_prompt,
-                                             'language': LANG})
+                                             'language': LANG,
+                                             'push_db': push_db_url})
             if response.status_code == 200:
                 st.write("Response form FastAPI:")
                 st.success('Done!')
