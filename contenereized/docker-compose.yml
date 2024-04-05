@@ -1,5 +1,6 @@
 version: '3'
 
+
 services:
   model_api:
     build: ./model_api
@@ -15,7 +16,23 @@ services:
     networks:
       - my_network
 
+  db:
+    build: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: train_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    networks:
+      - my_network
+    # volumes:
+    #   - db_data:/var/lib/mysql
+
+
 
 networks:
   my_network:
     driver: bridge
+
+# volumes:
+#   db_data:

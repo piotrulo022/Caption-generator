@@ -3,9 +3,8 @@ import requests
 from PIL import Image
 from io import BytesIO
 
-API_URL = 'http://streamlit_app:5001'
+API_URL = 'http://model_api:5000'
 LANG = 'ENGLISH'
-
 
 
 # Define Streamlit UI

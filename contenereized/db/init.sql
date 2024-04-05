@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS captioning;
+
+USE captioning;
+
+CREATE TABLE IF NOT EXISTS Images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    caption VARCHAR(255) NULL,
+    image_file BLOB NOT NULL,
+    created_time DATETIME DEFAULT CURRENT_TIMESTAMP
+);
