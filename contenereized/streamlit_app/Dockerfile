@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5005
 
-ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=5005"]
+ENTRYPOINT ["streamlit", "run", "main.py", "--server.port=5005"]
