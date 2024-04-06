@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from streamlit_option_menu import option_menu
 import time
-import Config, Get_caption, Homepage
+import Config, Get_caption, Homepage, database_preview
 
 st.set_page_config(
     page_title = "Captioning app"
@@ -23,7 +23,7 @@ fastapi_url = "http://model_api:5000/"
 
 with st.spinner("Waiting for FastAPI server to start..."):
     while not check_fastapi_ready(fastapi_url):
-        time.sleep(1)
+        time.sleep(4)
 
 
 class MultiApp:
@@ -43,9 +43,9 @@ class MultiApp:
             app = option_menu(
                 menu_title='Menu',
                 # options=['Home','Account','Trending','Your Posts','about'],
-                options=['Homepage','Config', 'Get caption' ],
+                options=['Homepage','Config', 'Get caption', 'Database'],
 
-                icons=['house-fill','gear','trophy-fill'],
+                icons=['house-fill','gear','trophy-fill', ':100:'],
                 menu_icon='chat-text-fill',
                 default_index=1,
                 
@@ -64,6 +64,8 @@ class MultiApp:
             Get_caption.app()
         if app == "Config":
             Config.app()
+        if app == "Database":
+            database_preview.app()
 
           
     run()            

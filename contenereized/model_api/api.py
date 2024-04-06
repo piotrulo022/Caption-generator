@@ -21,6 +21,7 @@ def load_model(MODEL_NAME):
         model = pipeline("image-to-text", model=MODEL_NAME)
         logging.info(f'Pipeline {MODEL_NAME} loaded successfully!')
     except Exception as e:
+        logging.error(f'Erro while loading {MODEL_NAME}! {str(e)}')
         return
 
 def img2db(image, caption):
@@ -63,12 +64,10 @@ class PredictionResponseModel(BaseModel):
     language: str
 
 
-MODEL_NAME = 'Salesforce/blip-image-captioning-base' # TODO: add option to select pretrained model
-
+MODEL_NAME = 'tarekziade/deit-tiny-distilgpt2'
 
 try: 
-    model = load_model(MODEL_NAME)
-    logging.info(f'Model {MODEL_NAME} loaded succesfully!')
+    load_model(MODEL_NAME)
 except Exception as e:
     logging.error(f'Model loading failed! Error: {str(e)}\nKilling app.')
     # Killing app
