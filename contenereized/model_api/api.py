@@ -6,12 +6,20 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from PIL import Image
 import mysql.connector
-
+import os
 
 from transformers import pipeline
 from io import BytesIO
 
 logging.basicConfig(level = logging.INFO)
+
+MODEL_NAME = 'tarekziade/deit-tiny-distilgpt2'
+
+DB_HOST = os.environ.get('DB_HOST')
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_DATABASE = os.environ.get('DB_DATABASE')
+
 
 
 def load_model(MODEL_NAME):
@@ -28,20 +36,22 @@ def img2db(image, caption):
     logging.info(f'Connecting to the database')
     try:
         db_connection = mysql.connector.connect(
-                        host="db",
-                        port = 3306,
-                        user="my_user",
-                        password="my_password",
-                        database="captioning"
-                        )
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PASSWORD,
+                    database=DB_DATABASE
+                    )
         logging.info(f'Connected successfully to the database!')
     except Exception as e:
         logging.error(f'An error occured while connecting to the database\n{str(e)}')
         return
+    
+
+
     db_cursor = db_connection.cursor()
     
-    insert_query = "INSERT INTO Images (caption, image_file) VALUES (%s, %s)"
-    insert_data = (caption, image)
+    insert_query = "INSERT INTO Images (caption, model_used, image_file) VALUES (%s, %s, %s)"
+    insert_data = (caption, MODEL_NAME, image)
 
     db_cursor.execute(insert_query, insert_data)
     db_connection.commit()
@@ -52,7 +62,6 @@ def img2db(image, caption):
 
 class URLRequestModel(BaseModel):
     url: str
-    language: str = 'English'
     prompt: str = 'Describe'
     push_db: bool = False
 
@@ -61,10 +70,7 @@ class PredictionResponseModel(BaseModel):
     prediction: str
     prompt: str
     model_name: str
-    language: str
 
-
-MODEL_NAME = 'tarekziade/deit-tiny-distilgpt2'
 
 try: 
     load_model(MODEL_NAME)
@@ -83,7 +89,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello World!"}
 
 @app.get('/model_name/')
 async def getmodelname():
@@ -123,8 +129,7 @@ async def predict(language: str = 'English', prompt: str = 'what is it', file: U
 
     return PredictionResponseModel(prediction = output_text, 
                                    prompt = prompt,
-                                   model_name=MODEL_NAME,
-                                   language = language)
+                                   model_name=MODEL_NAME)
 
 @app.post("/predict_image_url/")
 async def predict_url(request_data: URLRequestModel):
@@ -141,7 +146,4 @@ async def predict_url(request_data: URLRequestModel):
 
     return PredictionResponseModel(prediction = output_text, 
                                 prompt = request_data.prompt,
-                                model_name=MODEL_NAME,
-                                language = request_data.language)
-
-
+                                model_name = MODEL_NAME)

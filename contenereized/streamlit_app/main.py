@@ -2,11 +2,19 @@ import streamlit as st
 import requests
 from streamlit_option_menu import option_menu
 import time
-import Config, Get_caption, Homepage, database_preview
+import config, get_caption, Homepage, database_preview
+
+import os
+
+API_URL = os.environ.get('API_URL')
+
+
 
 st.set_page_config(
     page_title = "Captioning app"
 )
+
+
 def check_fastapi_ready(url):
     try:
         response = requests.get(url)
@@ -17,12 +25,9 @@ def check_fastapi_ready(url):
     except:
         return False
 
-# URL of your FastAPI server
-fastapi_url = "http://model_api:5000/"
-
 
 with st.spinner("Waiting for FastAPI server to start..."):
-    while not check_fastapi_ready(fastapi_url):
+    while not check_fastapi_ready(API_URL):
         time.sleep(4)
 
 
@@ -38,32 +43,21 @@ class MultiApp:
         })
 
     def run():
-        # app = st.sidebar(
         with st.sidebar:        
             app = option_menu(
                 menu_title='Menu',
-                # options=['Home','Account','Trending','Your Posts','about'],
                 options=['Homepage','Config', 'Get caption', 'Database'],
 
-                icons=['house-fill','gear','trophy-fill', ':100:'],
+                icons=['house-fill', 'gear', 'pen', 'database'],
                 menu_icon='chat-text-fill',
-                default_index=1,
-                
-        #         styles={
-        #             "container": {"padding": "5!important","background-color":'black'},
-        # "icon": {"color": "white", "font-size": "23px"}, 
-        # "nav-link": {"color":"white","font-size": "20px", "text-align": "left", "margin":"0px", "--hover-color": "blue"},
-        # "nav-link-selected": {"background-color": "#02ab21"},}
-                
-                )
+                default_index=0)
 
-        
         if app == "Homepage":
             Homepage.app()
         if app == "Get caption":
-            Get_caption.app()
+            get_caption.app()
         if app == "Config":
-            Config.app()
+            config.app()
         if app == "Database":
             database_preview.app()
 

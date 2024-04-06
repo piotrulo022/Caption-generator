@@ -2,9 +2,12 @@ import streamlit as st
 import requests
 from PIL import Image
 from io import BytesIO
+import os
+
+
+API_URL = os.environ.get('API_URL')
+
 def app():
-    API_URL = 'http://model_api:5000'
-    LANG = 'ENGLISH'
 
     # Define Streamlit UI
     st.title('Caption generator')
@@ -30,20 +33,16 @@ def app():
                 files = {'file': (file.name, bytes_data, file.type)}
                 response = requests.post(API_URL + '/predict_image_file/',
                                         files = files,
-                                        params = {'language': LANG,
-                                                'prompt': file_prompt,
+                                        params = {'prompt': file_prompt,
                                                 'push_db': push_db_file})
                 with st.spinner('Wait for it...'):
                     st.write(str(response.json()))
                     
                     if response.status_code == 200:
-                        st.write("*Image description:*")
-                        st.markdown(f"*{response.json()}*")
-                        # st.markdown(f"***{response.json()['prediction']}***")
-                        
+                        st.success(f"Image description:\t *{response.json()}*", icon="✅")
 
                     else:
-                        st.error("Failed to get description.") 
+                        st.error("Failed to get description.", icon="🚨") 
 
     with www:
         url = st.text_input("Pass www image source", value = "https://www.google.pl/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png")
@@ -55,18 +54,13 @@ def app():
 
         if st.button('Get description', key = 'url_request'):
             with st.spinner('Wait for it...'):
+                st.image(url)
                 response = requests.post(API_URL + '/predict_image_url/',
                                         json = {'url': url,
                                                 'prompt': url_prompt,
-                                                'language': LANG,
                                                 'push_db': push_db_url})
                 if response.status_code == 200:
-                    st.write("Response form FastAPI:")
-                    st.success('Done!')
-                    st.markdown(f"*{response.json()}*")
-
-                    # st.markdown(f"*{response.json()['prediction']}*")
+                    st.success(f"Image description:\t *{response.json()}*", icon="✅")
 
                 else:
-                    st.error("Failed to get description.")
-            
+                    st.error("Failed to get description.", icon="🚨") 
