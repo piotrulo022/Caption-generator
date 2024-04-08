@@ -15,7 +15,6 @@ def change_model():
 def app():
     selected_model = st.selectbox(f'Choose model', options = SUPPORTED_MODELS, key = 'selected-model', on_change=change_model)
     
-    
     modelname_response = requests.get(API_URL + '/model_name/')
 
     model_name = modelname_response.json()['model_name']

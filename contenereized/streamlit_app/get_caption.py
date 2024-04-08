@@ -14,9 +14,8 @@ def app():
 
     local, www = st.tabs(['From local', 'From www'])
 
-
     with local:
-        file = st.file_uploader("Upload a file", type=["jpg", "png"])
+        file = st.file_uploader("Upload a file", type=["jpg", "png", "jpeg", ])
         if file is not None:
             bytes_data = file.getvalue()
             img = Image.open(BytesIO(bytes_data))
@@ -36,13 +35,17 @@ def app():
                                         params = {'prompt': file_prompt,
                                                 'push_db': push_db_file})
                 with st.spinner('Wait for it...'):
-                    st.write(str(response.json()))
-                    
-                    if response.status_code == 200:
-                        st.success(f"Image description:\t *{response.json()}*", icon="✅")
+                    try:                    
+                        if response.status_code == 200:
+                            response_data = response.json()
+                            st.success(f"Image description:\t *{response_data['prediction']}*", icon="✅")
+                            st.markdown(f"Processing time: *{response_data['processing_time']}*")
 
-                    else:
-                        st.error("Failed to get description.", icon="🚨") 
+                        else:
+                            st.error("Failed to get description.", icon="🚨") 
+
+                    except Exception as e:
+                        st.error(f'An unexpected error occured! {str(e)}')
 
     with www:
         url = st.text_input("Pass www image source", value = "https://www.google.pl/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png")
@@ -55,12 +58,16 @@ def app():
         if st.button('Get description', key = 'url_request'):
             with st.spinner('Wait for it...'):
                 st.image(url)
-                response = requests.post(API_URL + '/predict_image_url/',
-                                        json = {'url': url,
-                                                'prompt': url_prompt,
-                                                'push_db': push_db_url})
-                if response.status_code == 200:
-                    st.success(f"Image description:\t *{response.json()}*", icon="✅")
-
-                else:
-                    st.error("Failed to get description.", icon="🚨") 
+                try:
+                    response = requests.post(API_URL + '/predict_image_url/',
+                                            json = {'url': url,
+                                                    'prompt': url_prompt,
+                                                    'push_db': push_db_url})
+                    if response.status_code == 200:
+                        response_data = response.json()
+                        st.success(f"Image description:\t *{response_data['prediction']}*", icon="✅")
+                        st.markdown(f"Processing time: *{response_data['processing_time']}*")
+                    else:
+                        st.error(f"Failed to get description. Response status code: {response.status_code}", icon="🚨") 
+                except Exception as e:
+                    st.error(f'An unexpected error occured! {str(e)}')
