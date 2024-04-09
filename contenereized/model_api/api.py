@@ -23,7 +23,7 @@ from io import BytesIO
 logging.basicConfig(level = logging.INFO) # logging module settings
 
 
-################### GlobaL variables ################### 
+################### Global variables ################### 
                                                        
 MODEL_NAME = 'tarekziade/deit-tiny-distilgpt2' # default model
 
@@ -112,8 +112,6 @@ def img2db(image, caption)-> None:
         raise  # Re-raise the exception
 
 
-
-
 ################### Initialization step - loading default model ################### 
 try: 
     load_model(MODEL_NAME)
@@ -124,8 +122,6 @@ except Exception as e:
     import signal
     pid = os.getpid()
     os.kill(pid, signal.SIGKILL)
-
-
 
 
 ################### FastAPI and its endpoints ################### 
@@ -162,7 +158,7 @@ def change_model(name:str):
         status = 'success'
     except Exception as e:
         status = 'failed'
-    # return {'result': 'failed'}
+
     return ChangeModelResponseModel(result=status)
 
 
@@ -201,8 +197,6 @@ async def predict(prompt: str = 'what is it', file: UploadFile = File(...), push
                                    prompt = prompt,
                                    model_name=MODEL_NAME,
                                    processing_time=str(processing_time))
-
-
 
 
 

@@ -1,40 +1,26 @@
 import streamlit as st
-import requests
 from streamlit_option_menu import option_menu
-import time
+
 import config, get_caption, homepage, database_preview
 
+import time
+import requests
 import os
-import socket
 
-API_URL = os.environ.get('API_URL')
+API_URL = os.environ.get('API_URL') # get OS environment variable for API URL adress
 
 
+# Define page setting is config
 st.set_page_config(
     page_title = "Captioning app"
 )
 
-def check_port(host, port):
-    try:
-        # Create a socket object
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # Set a timeout for the connection attempt
-        sock.settimeout(1)
-        # Attempt to connect to the host and port
-        result = sock.connect_ex((host, port))
-        # Close the socket
-        sock.close()
-        # Check if the connection was successful
-        if result == 0:
-            return f"Port {port} is open on {host}"
-        else:
-            return f"Port {port} is closed on {host}"
-    except socket.error as e:
-        return f"Error: {e}"
-    
 
-    
-def check_fastapi_ready(url):
+
+def check_service_status(url):
+    """
+    This funcion checks wheter URL is available and is used to monitor FastAPI container status.
+    """
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -43,21 +29,12 @@ def check_fastapi_ready(url):
             return False
     except:
         return False
+    
 
-###############TODO: finish
-def health_check():
-    database_status = check_port('db', 3306)
-    st.session_state['database_status'] = database_status # 0- alive, else not alive
 
-    fastapi_status = check_port('model_api', 5000)
-    st.session_state['fastapi_stauts'] = database_status # 0- alive, else 
-
-###################
-
-with st.spinner("Waiting for FastAPI server to start..."):
-    while not check_fastapi_ready(API_URL):
+with st.spinner("Waiting for FastAPI server to start..."): # wait for FastAPI to begin run
+    while not check_service_status(API_URL):
         time.sleep(4)
-
 
 class MultiApp:
     def __init__(self):
@@ -88,7 +65,5 @@ class MultiApp:
             config.app()
         if app == "Database":
             database_preview.app()
-
-          
     run()            
          
