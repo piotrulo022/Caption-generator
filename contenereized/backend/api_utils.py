@@ -12,6 +12,8 @@ import mysql.connector
 from transformers import pipeline
 
 
+
+
 logging.basicConfig(level = logging.INFO) # logging module settings
 
 
@@ -27,7 +29,7 @@ DB_DATABASE = os.environ.get('DB_DATABASE')
 
 
 ################### Request/Response data models ################### 
-class URLRequestModel(BaseModel):
+class PredictURLRequestModel(BaseModel):
     """
     Expected data model for requests for prediction image from URL.
     """
@@ -49,7 +51,7 @@ class PredictionResponseModel(BaseModel):
     prediction: str
     prompt: str
     processing_time: str
-    model_name: str
+    used_model_name: str
 
 
 class ChangeModelResponseModel(BaseModel):
