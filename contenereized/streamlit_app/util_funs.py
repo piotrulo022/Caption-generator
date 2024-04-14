@@ -1,12 +1,13 @@
-import os
 import streamlit as st
-from PIL import Image
-from io import BytesIO
-import requests
-from time import time 
-
 
 import mysql.connector
+
+from PIL import Image
+from io import BytesIO
+
+import requests
+import os
+from time import time 
 
 
 API_URL = os.environ.get('API_URL')
@@ -15,7 +16,7 @@ DB_USER = os.environ.get('DB_USER')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_DATABASE = os.environ.get('DB_DATABASE')
 
-SUPPORTED_MODELS = ['tarekziade/deit-tiny-distilgpt2', 'Salesforce/blip-image-captioning-base', 'llava-hf/llava-1.5-7b-hf', ]
+SUPPORTED_MODELS = ['tarekziade/deit-tiny-distilgpt2', 'Salesforce/blip-image-captioning-base', 'llava-hf/llava-1.5-7b-hf', 'keras-io/ocr-for-captcha', 'noamrot/FuseCap_Image_Captioning']
 
 
 
@@ -59,10 +60,8 @@ def delete_all_rows():
 def model_card(name):
     st.title("Model card")
 
-    # URL to be embedded
     url = "https://huggingface.co/" + name
 
-    # Use HTML component to embed a browser window
     st.components.v1.html(
         f'<iframe src="{url}" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>',
         height=800
@@ -79,3 +78,22 @@ def change_model():
             mess = st.error("Failed to switch model.", icon="🚨") 
         time.sleep(2)
         mess.empty()
+
+
+
+
+############## UTILS FOR database_preview.py ############## 
+
+def check_backend_status(url):
+    """
+    This funcion checks wheter URL is available and is used to monitor FastAPI container status.
+    """
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+    except:
+        return False
+    
