@@ -1,0 +1,38 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.0, pytest-8.1.1, pluggy-1.4.0 -- /home/piotr/miniconda3/envs/opc-project/bin/python
+cachedir: .pytest_cache
+rootdir: /home/piotr/STUDIA/IIst/OPC/PROJEKT/robocze_repo/contenereized/backend/tests
+plugins: anyio-4.3.0, Faker-24.7.1
+collecting ... collected 6 items
+
+test_api.py::test_read_root PASSED                                       [ 16%]
+test_api.py::test_get_model_name PASSED                                  [ 33%]
+test_api.py::test_predict_url PASSED                                     [ 50%]
+test_api.py::test_predict_file PASSED                                    [ 66%]
+test_api.py::test_purge_database PASSED                                  [ 83%]
+test_api.py::test_delete_row PASSED                                      [100%]
+
+=============================== warnings summary ===============================
+../../../../../../../../miniconda3/envs/opc-project/lib/python3.10/site-packages/transformers/models/deit/feature_extraction_deit.py:28
+  /home/piotr/miniconda3/envs/opc-project/lib/python3.10/site-packages/transformers/models/deit/feature_extraction_deit.py:28: FutureWarning: The class DeiTFeatureExtractor is deprecated and will be removed in version 5 of Transformers. Please use DeiTImageProcessor instead.
+    warnings.warn(
+
+../../../../../../../../miniconda3/envs/opc-project/lib/python3.10/site-packages/httpx/_client.py:680
+  /home/piotr/miniconda3/envs/opc-project/lib/python3.10/site-packages/httpx/_client.py:680: DeprecationWarning: The 'app' shortcut is now deprecated. Use the explicit style 'transport=WSGITransport(app=...)' instead.
+    warnings.warn(message, DeprecationWarning)
+
+test_api.py::test_predict_url
+test_api.py::test_predict_file
+  /home/piotr/miniconda3/envs/opc-project/lib/python3.10/site-packages/transformers/generation/utils.py:1132: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED test_api.py::test_read_root
+PASSED test_api.py::test_get_model_name
+PASSED test_api.py::test_predict_url
+PASSED test_api.py::test_predict_file
+PASSED test_api.py::test_purge_database
+PASSED test_api.py::test_delete_row
+======================== 6 passed, 4 warnings in 6.16s =========================
