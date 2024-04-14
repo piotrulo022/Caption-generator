@@ -1,40 +1,52 @@
-import mysql.connector
+# import mysql.connector
 import streamlit as st
 import pandas as pd
-from PIL import Image
-from io import BytesIO
+# from PIL import Image
+# from io import BytesIO
+# import requests
+# import os
 
-import os
+from util_funs import *
 
-DB_HOST = os.environ.get('DB_HOST')
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_DATABASE = os.environ.get('DB_DATABASE')
+# API_URL = os.environ.get('API_URL')
+# DB_HOST = os.environ.get('DB_HOST')
+# DB_USER = os.environ.get('DB_USER')
+# DB_PASSWORD = os.environ.get('DB_PASSWORD')
+# DB_DATABASE = os.environ.get('DB_DATABASE')
 
-def get_data():
-    db_connection = mysql.connector.connect(
-                host=DB_HOST,
-                user=DB_USER,
-                password=DB_PASSWORD,
-                database=DB_DATABASE
-                )
-    db_cursor = db_connection.cursor()
+# def get_data():
+#     db_connection = mysql.connector.connect(
+#                 host=DB_HOST,
+#                 user=DB_USER,
+#                 password=DB_PASSWORD,
+#                 database=DB_DATABASE
+#                 )
+#     db_cursor = db_connection.cursor()
     
-    query = "SELECT * FROM Images;"
-    db_cursor.execute(query)
+#     query = "SELECT * FROM Images;"
+#     db_cursor.execute(query)
 
-    data = db_cursor.fetchall()
+#     data = db_cursor.fetchall()
 
-    colnames = [column[0] for column in db_cursor.description]
+#     colnames = [column[0] for column in db_cursor.description]
 
 
-    return {'data': data,
-            'colnames': colnames}
+#     return {'data': data,
+#             'colnames': colnames}
 
-def decode_image(file):
-    image = Image.open(BytesIO(file)).convert('RGB')
+# def decode_image(file):
+#     image = Image.open(BytesIO(file)).convert('RGB')
 
-    return image
+#     return image
+
+
+# def delete_row(created_time, caption):
+#     requests.delete(url = API_URL + '/delete_row/', params = {'created_time': created_time,
+#                                                               'caption': caption} )
+
+# def delete_all_rows():
+#     requests.delete(url = API_URL + '/purge_database/')
+    
 
 def app():
     st.title('Gallery!')
@@ -45,7 +57,9 @@ def app():
     else:
         df = data['data']
         df = pd.DataFrame(df, columns=data['colnames'])
-
+        
+        
+        st.button('Purge database', on_click = delete_all_rows)
         st.markdown("""
                 <style>
                 .caption-font {
@@ -57,6 +71,7 @@ def app():
         
 
         c1, c2, c3 = st.columns([3, 1, 2], gap = 'medium')
+
         c1.markdown('## Image')
         c2.markdown('## Model used')
         c3.markdown('## Caption')
@@ -66,16 +81,17 @@ def app():
             image.resize((128, 64))
 
             caption = row['caption']
-            
             created_time = row['created_time']
-            
             model_used = row['model_used']
 
 
-            image_col, model_col, caption_col = st.columns([3, 1, 2], gap = 'medium')
+            del_but, image_col, model_col, caption_col = st.columns([1, 3, 1, 2], gap = 'medium')
+            
             
             image_col.image(image, caption = 'Created at: ' + str(created_time))
             
             model_col.markdown(f'*{model_used}*')
 
             caption_col.markdown(f'<p class="caption-font"> {caption} </p>', unsafe_allow_html=True)
+            
+            del_but.button('Delete', on_click = delete_row, key = str(ind), args = (str(created_time), caption))
