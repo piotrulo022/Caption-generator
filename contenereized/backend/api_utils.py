@@ -34,7 +34,6 @@ class PredictURLRequestModel(BaseModel):
     Expected data model for requests for prediction image from URL.
     """
     url: str
-    prompt: str = 'Describe'
     push_db: bool = False
 
 class DeleteRowRequestModel(BaseModel):
@@ -49,7 +48,6 @@ class PredictionResponseModel(BaseModel):
     Prediction response data model.
     """
     prediction: str
-    prompt: str
     processing_time: str
     used_model_name: str
 

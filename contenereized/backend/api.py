@@ -87,7 +87,7 @@ def change_model(name:str):
 
 
 @app.post("/predict_image_file/", tags = ['Prediction'])
-async def predict(prompt: str = 'what is it', file: UploadFile = File(...), push_db: bool = False):
+async def predict(file: UploadFile = File(...), push_db: bool = False):
     """
     Generate caption for a uploaded image file.
     """
@@ -106,7 +106,7 @@ async def predict(prompt: str = 'what is it', file: UploadFile = File(...), push
     # measure processing itme
     start_time = time()
     
-    output_text = model(image, prompt=prompt)[0]['generated_text']
+    output_text = model(image)[0]['generated_text']
 
     if push_db:
        img2db(file_data, caption=output_text)
@@ -117,7 +117,6 @@ async def predict(prompt: str = 'what is it', file: UploadFile = File(...), push
     processing_time = end_time - start_time
 
     return PredictionResponseModel(prediction = output_text, 
-                                   prompt = prompt,
                                    used_model_name=MODEL_NAME,
                                    processing_time=str(processing_time))
 
@@ -140,7 +139,7 @@ async def predict_url(request_data: PredictURLRequestModel):
     # Measure time
     start_time = time()
     
-    output_text = model(image, prompt=request_data.prompt)[0]['generated_text']
+    output_text = model(image)[0]['generated_text']
 
     if request_data.push_db:
         img2db(response.content, caption = output_text)
@@ -150,13 +149,8 @@ async def predict_url(request_data: PredictURLRequestModel):
     processing_time = end_time - start_time
 
     return PredictionResponseModel(prediction = output_text, 
-                                    prompt = request_data.prompt,
                                     used_model_name = MODEL_NAME,
                                     processing_time = str(processing_time))
-
-
-
-
 
 # DELETE METHODS
 
