@@ -1,3 +1,7 @@
+"""
+This file is a page of streamlit UI microservice and is used to change model for caption generating.
+"""
+
 import streamlit as st
 import requests
 from util_funs import API_URL, SUPPORTED_MODELS

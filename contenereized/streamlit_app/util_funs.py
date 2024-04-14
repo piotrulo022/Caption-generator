@@ -7,8 +7,7 @@ from io import BytesIO
 
 import requests
 import os
-from time import time 
-
+import time
 
 API_URL = os.environ.get('API_URL')
 DB_HOST = os.environ.get('DB_HOST')
@@ -16,7 +15,7 @@ DB_USER = os.environ.get('DB_USER')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_DATABASE = os.environ.get('DB_DATABASE')
 
-SUPPORTED_MODELS = ['tarekziade/deit-tiny-distilgpt2', 'Salesforce/blip-image-captioning-base', 'llava-hf/llava-1.5-7b-hf', 'keras-io/ocr-for-captcha', 'noamrot/FuseCap_Image_Captioning']
+SUPPORTED_MODELS = ['tarekziade/deit-tiny-distilgpt2', 'Salesforce/blip-image-captioning-base', 'llava-hf/llava-1.5-7b-hf', 'noamrot/FuseCap_Image_Captioning']
 
 
 
