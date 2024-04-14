@@ -2,10 +2,9 @@ import streamlit as st
 import requests
 from PIL import Image
 from io import BytesIO
-import os
 
 
-API_URL = os.environ.get('API_URL')
+from util_funs import API_URL
 
 def app():
 
@@ -25,7 +24,7 @@ def app():
             push_db_file = st.checkbox(label = 'Push to the database', value = True, key = 'push_db_file')
 
 
-            file_prompt = st.text_input(label = 'Additional prompt', value = 'Tell me what it is', key = 'file_prompt')
+            file_prompt = st.text_input(label = 'Additional prompt', value = 'A picture of:', key = 'file_prompt')
 
             if st.button('Get description', key = 'file_request'):
 
@@ -49,7 +48,7 @@ def app():
 
     with www:
         url = st.text_input("Pass www image source", value = "https://www.google.pl/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png")
-        url_prompt = st.text_input(label = 'Additional prompt', value = 'Tell me what it is', key = 'url_prompt')
+        url_prompt = st.text_input(label = 'Additional prompt', value = 'A picture of:', key = 'url_prompt')
 
 
         push_db_url = st.checkbox(label = 'Push to the database', value = True, key = 'push_db_url')
