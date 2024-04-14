@@ -4,11 +4,9 @@ from streamlit_option_menu import option_menu
 import config, get_caption, homepage, database_preview
 
 import time
-import requests
-import os
 
-API_URL = os.environ.get('API_URL') # get OS environment variable for API URL adress
-
+from util_funs import API_URL
+from util_funs import check_backend_status
 
 # Define page setting is config
 st.set_page_config(
@@ -16,25 +14,14 @@ st.set_page_config(
 )
 
 
-
-def check_service_status(url):
-    """
-    This funcion checks wheter URL is available and is used to monitor FastAPI container status.
-    """
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            return True
-        else:
-            return False
-    except:
-        return False
-    
-
-
+# Assert that backend service is running
 with st.spinner("Waiting for FastAPI server to start..."): # wait for FastAPI to begin run
-    while not check_service_status(API_URL):
+    while not check_backend_status(API_URL):
         time.sleep(4)
+
+
+
+
 
 class MultiApp:
     def __init__(self):
@@ -51,7 +38,7 @@ class MultiApp:
         with st.sidebar:        
             app = option_menu(
                 menu_title='Menu',
-                options=['Homepage','Config', 'Get caption', 'Database'],
+                options=['Homepage','Config', 'Generate captions', 'Database'],
 
                 icons=['house-fill', 'gear', 'pen', 'database'],
                 menu_icon='chat-text-fill',
@@ -59,7 +46,7 @@ class MultiApp:
 
         if app == "Homepage":
             homepage.app()
-        if app == "Get caption":
+        if app == "Generate captions":
             get_caption.app()
         if app == "Config":
             config.app()
