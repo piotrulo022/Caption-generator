@@ -1,3 +1,7 @@
+"""
+This file is a page of streamlit UI microservice and is used to generate captions.
+"""
+
 import streamlit as st
 import requests
 from PIL import Image
@@ -7,8 +11,6 @@ from io import BytesIO
 from util_funs import API_URL
 
 def app():
-
-    # Define Streamlit UI
     st.title('Caption generator')
 
     local, www = st.tabs(['From local', 'From www'])
@@ -23,16 +25,12 @@ def app():
             
             push_db_file = st.checkbox(label = 'Push to the database', value = True, key = 'push_db_file')
 
-
-            file_prompt = st.text_input(label = 'Additional prompt', value = 'A picture of:', key = 'file_prompt')
-
             if st.button('Get description', key = 'file_request'):
 
                 files = {'file': (file.name, bytes_data, file.type)}
                 response = requests.post(API_URL + '/predict_image_file/',
                                         files = files,
-                                        params = {'prompt': file_prompt,
-                                                'push_db': push_db_file})
+                                        params = {'push_db': push_db_file})
                 with st.spinner('Wait for it...'):
                     try:                    
                         if response.status_code == 200:
@@ -48,9 +46,6 @@ def app():
 
     with www:
         url = st.text_input("Pass www image source", value = "https://www.google.pl/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png")
-        url_prompt = st.text_input(label = 'Additional prompt', value = 'A picture of:', key = 'url_prompt')
-
-
         push_db_url = st.checkbox(label = 'Push to the database', value = True, key = 'push_db_url')
 
 
@@ -60,7 +55,6 @@ def app():
                 try:
                     response = requests.post(API_URL + '/predict_image_url/',
                                             json = {'url': url,
-                                                    'prompt': url_prompt,
                                                     'push_db': push_db_url})
                     if response.status_code == 200:
                         response_data = response.json()
