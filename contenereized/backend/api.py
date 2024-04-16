@@ -63,8 +63,6 @@ async def getmodelname():
     return {'model_name': MODEL_NAME}
 
 
-
-
 # POST METHODS
 
 @app.post('/change_model/', tags=['Model config'])

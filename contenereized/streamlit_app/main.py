@@ -8,19 +8,14 @@ import time
 from util_funs import API_URL
 from util_funs import check_backend_status
 
-# Define page setting is config
 st.set_page_config(
     page_title = "Captioning app"
 )
 
 
-# Assert that backend service is running
 with st.spinner("Waiting for FastAPI server to start..."): # wait for FastAPI to begin run
     while not check_backend_status(API_URL):
         time.sleep(4)
-
-
-
 
 
 class MultiApp:
