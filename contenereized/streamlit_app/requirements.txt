@@ -4,3 +4,4 @@ requests==2.31.0
 mysql-connector-python==8.3.0
 pandas==2.2.1
 pillow==10.2.0
+beautifulsoup4==4.12.3
