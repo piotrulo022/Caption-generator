@@ -1,6 +1,7 @@
 import streamlit as st
-
+from bs4 import BeautifulSoup
 import mysql.connector
+import streamlit.components.v1 as components
 
 from PIL import Image
 from io import BytesIO
@@ -57,14 +58,33 @@ def delete_all_rows():
 ############## UTILS FOR database_preview.py ############## 
 
 def model_card(name):
-    st.title("Model card")
-
+    
     url = "https://huggingface.co/" + name
+    
+    # fetch css styles
+    css_url = "https://huggingface.co/front/build/kube-10ebcd5/style.css"
+    css_response = requests.get(css_url)
+    
+    # fetch page contents
+    response = requests.get(url)
+    
+    if response.status_code == 200 and css_response.status_code == 200:
 
-    st.components.v1.html(
-        f'<iframe src="{url}" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>',
-        height=800
-    )
+        # scrap model card contents
+        soup = BeautifulSoup(response.content, 'html.parser')
+        elements = soup.find_all(class_="relative md:mt-2")
+        
+        # display page
+        html_contents = f"<style>{css_response.text}</style>"
+
+        for element in elements:
+            html_contents += str(element)
+        components.html(html_contents, height=500, scrolling=True)
+
+    else:
+        st.error("Failed to retrieve model information.")
+
+
 
 
 def change_model():

@@ -9,6 +9,9 @@ from util_funs import change_model, model_card
 
 
 def app():
+    """
+    Config page
+    """
     selected_model = st.selectbox(f'Choose model', options = SUPPORTED_MODELS, key = 'selected-model', on_change=change_model)
     
     modelname_response = requests.get(API_URL + '/model_name/')
