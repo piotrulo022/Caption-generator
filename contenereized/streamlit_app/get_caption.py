@@ -12,9 +12,11 @@ from util_funs import API_URL
 
 def app():
     st.title('Caption generator')
+    st.write('Pass some images and get captions of them!')
 
     local, www = st.tabs(['From local', 'From www'])
 
+    # MODE = LOCAL
     with local:
         file = st.file_uploader("Upload a file", type=["jpg", "png", "jpeg", ])
         if file is not None:
@@ -44,14 +46,21 @@ def app():
                     except Exception as e:
                         st.error(f'An unexpected error occured! {str(e)}')
 
+
+    # MODE = WWW
+
     with www:
-        url = st.text_input("Pass www image source", value = "https://www.google.pl/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png")
+        url = st.text_input("Pass www image source", value = "https://raw.githubusercontent.com/piotrulo022/Caption-generator/main/contenereized/backend/tests/elephantoo.png")
         push_db_url = st.checkbox(label = 'Push to the database', value = True, key = 'push_db_url')
 
 
         if st.button('Get description', key = 'url_request'):
             with st.spinner('Wait for it...'):
-                st.image(url)
+                try:
+                    st.image(url)
+                except Exception as e:
+                    pass
+                
                 try:
                     response = requests.post(API_URL + '/predict_image_url/',
                                             json = {'url': url,
