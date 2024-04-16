@@ -1,3 +1,6 @@
+"""
+This file is a page of streamlit UI microservice and provides database preview.
+"""
 import streamlit as st
 import pandas as pd
 
@@ -5,13 +8,19 @@ from util_funs import *
 
 
 def app():
-    st.title('Gallery!')
+    """
+    Database preview page
+    """
+    
+    st.title('Gallery')
+
     data = get_data()
-    if not data:
-        st.write('Nothing here yet. Generate some captions so they will apear here!')
+    df = data['data']
+
+    if len(df) == 0:
+        st.write('Nothing here yet. Generate some captions and push them to the database so they will apear here!')
 
     else:
-        df = data['data']
         df = pd.DataFrame(df, columns=data['colnames'])
         
         
@@ -32,7 +41,7 @@ def app():
         c2.markdown('## Model used')
         c3.markdown('## Caption')
         
-        for ind, row in df.iterrows():
+        for ind, row in df.iterrows(): # draw images stored in database
             image = decode_image(row['image_file']) 
             image.resize((128, 64))
 
@@ -42,7 +51,6 @@ def app():
 
 
             del_but, image_col, model_col, caption_col = st.columns([1, 3, 1, 2], gap = 'medium')
-            
             
             image_col.image(image, caption = 'Created at: ' + str(created_time))
             
