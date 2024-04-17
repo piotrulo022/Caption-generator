@@ -8,6 +8,4 @@ https://github.com/piotrulo022/Caption-generator/assets/76213314/6f64147d-5da3-4
 Projekt został opracowany w Python i składa się z trzech mikroserwisów - aplikacji UI napisanej w środowisku streamlit, mikroserwisu backend dostarczającego narzędzia do predykcji oraz bazy danych przechowującej zapisane przez uzytkownika predykcje. Aplikacja jest skonteneryzowana dockerem.
 
 Każdy z mikroserwisów został osobno opisany w folderach.
-<div style="text-align:center;">
-    <img src="https://github.com/piotrulo022/Caption-generator/assets/76213314/e1b8f9e8-59a7-4708-b545-f4b5b575cd68" alt="Captioning Architecture">
-</div>
+![captioning-architecture](https://github.com/piotrulo022/Caption-generator/assets/76213314/03200b09-2731-4a65-bc9f-302aaae82f6c){:style="display:block; margin-left:auto; margin-right:auto"}
