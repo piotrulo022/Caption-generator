@@ -4,7 +4,7 @@ This folder includes files for backend container microservice that serve FastAPI
 
 The microservice handles incoming HTTP requests from `streamlit_app` and communicates with the database. It handles the crucial task of returning model predictions. These predictions are often central to the functionality of the entire system, making this microservice a key component in the overall workflow.
 
-# Folder strucure description
+# Folder structure description
 
  - `/tests/` - includes API unit tests;
  - `Dockerfile` - file containing a set of instructions used to build a Docker image;
