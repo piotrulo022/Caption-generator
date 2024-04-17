@@ -66,24 +66,6 @@ class DeleteDataResponseModel(BaseModel):
 
 ################### Util functions ################### 
 
-def load_model(MODEL_NAME: str) -> None:
-    """
-    This funcion changes globally used model for generating caption.
-
-    # Arguments:
-
-    - `MODEL_NAME`:str - model name desired to be used as caption generator. 
-    
-    """
-    global model
-    try:
-        logging.info(f'Loading {MODEL_NAME} pipeline')
-        model = pipeline("image-to-text", model=MODEL_NAME)
-        logging.info(f'Pipeline {MODEL_NAME} loaded successfully!')
-    except Exception as e:
-        logging.error(f'Error while loading {MODEL_NAME}! {str(e)}')
-        return
-
 def img2db(image, caption)-> None:
     """
     Push instance (image, caption) to the database.

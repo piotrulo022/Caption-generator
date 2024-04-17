@@ -10,7 +10,6 @@ from fastapi.responses import JSONResponse
 from PIL import Image
 from io import BytesIO
 
-
 # global variables, data models and important functions
 from api_utils import *
 
