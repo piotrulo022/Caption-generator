@@ -56,7 +56,7 @@ async def root():
     """
     return {"message": "Hello World!"}
 
-@app.get('/model_name/')
+@app.get('/model_name/', tags = ['Model info'])
 async def getmodelname():
     logging.info(f'Received GET request on /model_name/')
     return {'model_name': MODEL_NAME}
@@ -151,7 +151,7 @@ async def predict_url(request_data: PredictURLRequestModel):
 
 # DELETE METHODS
 
-@app.delete('/purge_database/')
+@app.delete('/purge_database/', tags = ['Alter database'])
 def delete_database():
     """
     Delete everything from table that stores images.
@@ -163,7 +163,7 @@ def delete_database():
     return DeleteDataResponseModel(result = result)
 
 
-@app.delete('/delete_row/')
+@app.delete('/delete_row/', tags = ['Alter database'])
 async def delete_single_row(request_data: DeleteRowRequestModel):
     """
     Delete single row from table that stores images. Row is being found by given `created_time` and `caption` params and deleted.
