@@ -9,3 +9,4 @@ Projekt został opracowany w Python i składa się z trzech mikroserwisów - ap
 
 Każdy z mikroserwisów został osobno opisany w folderach.
 
+![captioning-architecture](https://github.com/piotrulo022/Caption-generator/assets/76213314/e1b8f9e8-59a7-4708-b545-f4b5b575cd68)
