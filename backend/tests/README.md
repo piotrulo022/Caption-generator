@@ -9,7 +9,7 @@ pytest
 ```
 in this directory.
 
-If you want to store logs in seperate file, for example in `test_logs`:
+If you want to store logs in seperate file, use `>` operator. Example of storing logs in `test_logs` file:
 
 ```bash
 pytest -rA -v > test_logs
