@@ -8,6 +8,7 @@ This folder contains the source code for a UI application built with the Streaml
 Operations performed by the client within the UI interface trigger requests sent to the backend. Subsequently, the received responses are displayed back to the user. This seamless interaction between the frontend and backend ensures smooth functionality and an intuitive user experience.
 
 # Folder structure description
+- `/resources` - resource files used by application;
 - `Dockerfile` - file containing a set of instructions used to build a Docker image;
 - `requirements.txt` - set of packages installed in docker container needed for application to work;
 - `main.py` - main application script;
