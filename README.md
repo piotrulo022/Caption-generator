@@ -6,7 +6,9 @@ https://github.com/piotrulo022/Caption-generator/assets/76213314/6f64147d-5da3-4
 
 The project was developed in Python and consists of three microservices - a UI application written using Streamlit, a backend microservice providing prediction tools, and a database storing user-saved predictions. The application is containerized using Docker.
 
-![captioning-architecture](https://github.com/piotrulo022/Caption-generator/assets/76213314/03200b09-2731-4a65-bc9f-302aaae82f6c)
+<p align="center">
+  <img src="https://github.com/piotrulo022/Caption-generator/assets/76213314/03200b09-2731-4a65-bc9f-302aaae82f6c">
+</p>
 
 You can find documentation of every microservice in its directory.
 # How to run
@@ -20,3 +22,10 @@ docker compose build && docker compose up
 
 > [!WARNING]
 > This application fetches large *image-to-seq* models, therefore it requires a stable and fairly fast internet connection to operate smoothly. Thus the initial run might take some time as the default model is being downloaded.
+
+
+# References
+- [Streamlit - A faster way to build and share data apps](https://streamlit.io/)
+- [Huggingface - The AI community building the future.](https://huggingface.co/)
+- [Docker - Accelerated Container Application Development](https://www.docker.com/)
+- [FastAPI framework](https://fastapi.tiangolo.com/)
