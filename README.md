@@ -1,6 +1,5 @@
 # Caption generator application built with microservices
-This is a repository of project for web application that generates description for images. Descriptions are made using ready-made models from the transformers library.
-
+This is a repository of project for web application that generates description for images. Descriptions are made using pretrained models from the [transformers](https://huggingface.co/docs/transformers/index) library.
 
 https://github.com/piotrulo022/Caption-generator/assets/76213314/6f64147d-5da3-4782-87df-1db7e02c5b12
 
