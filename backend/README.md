@@ -20,7 +20,7 @@ This API consists of 5 endpoints where:
 - ${\color{green}@POST}$ `/predict_image_file/` - returns prediction for given image file uploaded from local disk;
 - ${\color{green}@POST}$ `/predict_image_url/` - returns prediction for given image given by its URL site location;
 - ${\color{red}@DELETE}$ `/purge_database/` - remove all images along their captions stored in database;
-- ${\color{red}@DELETE}$ `/delete_row/` - remove images where given caption and created_time params match.
+- ${\color{red}@DELETE}$ `/delete_row/` - remove images where given *caption* and *created_time* params match.
 
 ![image](https://github.com/piotrulo022/Caption-generator/assets/76213314/cfb7f541-9146-4d22-a886-ba67afcd6720)
 
