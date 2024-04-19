@@ -1,5 +1,6 @@
-GRANT ALL PRIVILEGES ON captioning.* TO my_user;
+GRANT ALL PRIVILEGES ON captioning.* TO my_user; -- grant privileges for default user
 
+-- create database and table for storing images along with their captions
 CREATE DATABASE IF NOT EXISTS captioning;
 
 USE captioning;
