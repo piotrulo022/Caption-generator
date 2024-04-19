@@ -50,7 +50,8 @@ def app():
     # MODE = WWW
 
     with www:
-        url = st.text_input("Pass www image source", value = "https://raw.githubusercontent.com/piotrulo022/Caption-generator/main/contenereized/backend/tests/elephantoo.png")
+        url = st.text_input("Pass www image source", value = "https://raw.githubusercontent.com/piotrulo022/Caption-generator/main/backend/tests/elephantoo.png")
+        
         push_db_url = st.checkbox(label = 'Push to the database', value = True, key = 'push_db_url')
 
 
