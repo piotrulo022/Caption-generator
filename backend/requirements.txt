@@ -1,10 +1,13 @@
+#Utils + API
 pillow==10.2.0
 python-multipart==0.0.9
 fastapi==0.110.0
 pydantic==2.6.4
 uvicorn==0.29.0
+mysql-connector-python==8.3.0
 
+#AI
 -f https://download.pytorch.org/whl/torch_stable.html                                                                
 torch==2.2.1+cpu
 transformers==4.39.1
-mysql-connector-python==8.3.0
+
