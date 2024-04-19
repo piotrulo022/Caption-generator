@@ -1,22 +1,21 @@
 version: '3'
 
-
 services:
-  backend:
+  backend: # RestAPI backend service providing tools for generating prediction and database management
     build: ./backend
     ports:
       - "5000:5000"
     networks:
       - my_network
 
-  streamlit_app:
+  streamlit_app: # User Interfrace frontend web app
     build: ./streamlit_app
     ports:
       - "5005:5005"
     networks:
       - my_network
 
-  db:
+  db: # MySQL database that stores images with their generated captions
     build: ./db
     ports:
       - "3306:3306"
@@ -27,7 +26,6 @@ services:
       MYSQL_PASSWORD: my_password
     networks:
       - my_network
-
 
 networks:
   my_network:
