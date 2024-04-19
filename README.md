@@ -1,7 +1,8 @@
 # Caption generator application built with microservices
 This is a repository of project for web application that generates description for images. Descriptions are made using pretrained models from the [transformers](https://huggingface.co/docs/transformers/index) library.
 
-https://github.com/piotrulo022/Caption-generator/assets/76213314/6f64147d-5da3-4782-87df-1db7e02c5b12
+https://github.com/piotrulo022/Caption-generator/assets/76213314/5a555809-6792-44af-bcf6-5b07c5b700e8
+
 
 The project consists of three indepentent microservices - a UI application written using Streamlit, a backend microservice providing prediction tools and a database storing user-saved predictions. The application is containerized using [Docker](https://www.docker.com/).
 
